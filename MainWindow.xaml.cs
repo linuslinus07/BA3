@@ -1,4 +1,4 @@
-﻿using System.Text;
+using System.Text;
 using System;
 using System.IO;
 using System.Windows;
@@ -21,6 +21,7 @@ using Microsoft.VisualBasic;
 using System.Linq.Expressions;
 using System.Windows.Media.Media3D;
 using Microsoft.Win32;
+using System.Windows.Automation.Peers;
 
 namespace WpfApp2
 {
@@ -61,6 +62,7 @@ namespace WpfApp2
                 _anz.Text = Properties.Settings.Default.anz.ToString();
 
                 _speichern.IsChecked = true;
+                _farbe.IsChecked = Properties.Settings.Default.farbe;
 
                 string lastOption = Properties.Settings.Default.drillDia;
                 _firmaName.Text = Properties.Settings.Default.kunde.ToString();
@@ -110,6 +112,8 @@ namespace WpfApp2
             _firmaName.Text = "";
             _spinRPM.Value = 24000;
             _custom.IsChecked = false;
+            _farbe.IsChecked = false;
+            
 
             // RadioButtons deaktivieren
             OptionA.IsChecked = false;
@@ -137,6 +141,7 @@ namespace WpfApp2
             Properties.Settings.Default.xAbst = 0;
             Properties.Settings.Default.IsChecked = false;
             Properties.Settings.Default.custom = false;
+            Properties.Settings.Default.farbe = false;
             Properties.Settings.Default.anz = 1;
             Properties.Settings.Default.kunde = "";
             Properties.Settings.Default.Save();
@@ -239,6 +244,7 @@ namespace WpfApp2
                 bool custom = _custom.IsChecked == true;
                 double spinRPM = _spinRPM.Value;
                 bool IsChecked = _speichern.IsChecked == true;
+                bool farbe = _farbe.IsChecked == true;
 
                 string firma = _firmaName.Text;
                 string kunde = "_" + firma;
@@ -266,19 +272,47 @@ namespace WpfApp2
                 }
                 else if (drillDia == 0.8)
                 {
-                    spinRPM = 37500;
+                    if (farbe == true)
+                    {
+                        spinRPM = 33750;
+                    }
+                    else
+                    {
+                        spinRPM = 37500;
+                    }
                 }
                 else if (drillDia == 1.0)
                 {
-                    spinRPM = 30000;
+                    if (farbe == true)
+                    {
+                        spinRPM = 27000;
+                    }
+                    else
+                    {
+                        spinRPM = 30000;
+                    }
                 }
                 else if (drillDia == 1.3)
                 {
-                    spinRPM = 24000;
+                    if (farbe == true)
+                    {
+                        spinRPM = 21600;
+                    }
+                    else
+                    {
+                        spinRPM = 24000;
+                    }
                 }
                 else if (drillDia == 1.5)
                 {
-                    spinRPM = 20000;
+                    if (farbe == true)
+                    {
+                        spinRPM = 18000;
+                    }
+                    else
+                    {
+                        spinRPM = 20000;
+                    }
                 }
                 else if (drillDia == 2.0)
                 {
@@ -421,7 +455,7 @@ namespace WpfApp2
                         Currentx = 0;
 
                         writer.WriteLine("G0 A0");
-                        writer.WriteLine("G0 X0");
+                        writer.WriteLine("G0 X23");
                         writer.WriteLine("G43 Z" + (radExt + secur) + " H1");
                         writer.WriteLine("G98 G81 X" + xErste + " Z" + (radInt - durch) + " R" + (radExt + secur) + " F9500");
 
@@ -733,6 +767,7 @@ namespace WpfApp2
                     Properties.Settings.Default.kunde = _firmaName.Text;
 
                     Properties.Settings.Default.IsChecked = true;
+                    Properties.Settings.Default.farbe = _farbe.IsChecked == true;
 
                     string selectedMode = OptionA.IsChecked == true ? "0.8" :
                                 OptionB.IsChecked == true ? "1.0" :
