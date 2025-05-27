@@ -238,5 +238,20 @@ namespace WpfApp2.Properties {
                 this["kunde"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool farbe
+        {
+            get
+            {
+                return ((bool)(this["farbe"]));
+            }
+            set
+            {
+                this["farbe"] = value;
+            }
+        }
     }
 }
