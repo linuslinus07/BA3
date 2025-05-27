@@ -1,4 +1,4 @@
-﻿<Window x:Class="WpfApp2.MainWindow"
+<Window x:Class="WpfApp2.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -84,14 +84,14 @@
                         <TextBlock HorizontalAlignment="Left" Height="19" Margin="367,43,0,0" TextWrapping="Wrap" Text="[mm]" VerticalAlignment="Top" Width="38"/>
                     </Grid>
                 </GroupBox>
-                <GroupBox HorizontalAlignment="Left" Height="96" Header="Bohrdurchmesser" Margin="507,126,0,0" VerticalAlignment="Top" Width="245" BorderBrush="Black" FontSize="16" FontFamily="Bahnschrift SemiBold">
+                <GroupBox HorizontalAlignment="Left" Height="96" Header="Bohrdurchmesser" Margin="507,126,0,0" VerticalAlignment="Top" Width="212" BorderBrush="Black" FontSize="16" FontFamily="Bahnschrift SemiBold">
                     <Grid HorizontalAlignment="Left" Width="235" Height="72">
-                        <RadioButton x:Name="OptionA" Content="0.8 mm" HorizontalAlignment="Left" Height="16" Margin="20,5,0,0" VerticalAlignment="Top" Width="108" BorderBrush="Black" FontFamily="Bahnschrift SemiBold" Cursor="Hand"/>
-                        <RadioButton x:Name="OptionB" Content="1.0 mm" HorizontalAlignment="Left" Height="17" Margin="20,0,0,0" VerticalAlignment="Center" Width="109" BorderBrush="Black" Cursor="Hand"/>
-                        <RadioButton x:Name="OptionC" Content="1.3 mm" HorizontalAlignment="Left" Height="16" Margin="20,50,0,0" VerticalAlignment="Top" Width="107" BorderBrush="Black" Cursor="Hand"/>
-                        <RadioButton x:Name="OptionF" Content="3.0 mm" HorizontalAlignment="Left" Height="16" Margin="118,50,0,0" VerticalAlignment="Top" Width="107" BorderBrush="Black" Cursor="Hand"/>
-                        <RadioButton x:Name="OptionE" Content="2.0 mm" HorizontalAlignment="Left" Height="16" Margin="118,0,0,0" VerticalAlignment="Center" Width="106" BorderBrush="Black" Cursor="Hand"/>
-                        <RadioButton x:Name="OptionD" Content="1.5 mm" HorizontalAlignment="Left" Height="16" Margin="118,5,0,0" VerticalAlignment="Top" Width="107" BorderBrush="Black" Cursor="Hand"/>
+                        <RadioButton x:Name="OptionA" Content="0.8 mm" HorizontalAlignment="Left" Height="16" Margin="15,5,0,0" VerticalAlignment="Top" Width="108" BorderBrush="Black" FontFamily="Bahnschrift SemiBold" Cursor="Hand"/>
+                        <RadioButton x:Name="OptionB" Content="1.0 mm" HorizontalAlignment="Left" Height="16" Margin="15,0,0,0" VerticalAlignment="Center" Width="109" BorderBrush="Black" Cursor="Hand"/>
+                        <RadioButton x:Name="OptionC" Content="1.3 mm" HorizontalAlignment="Left" Height="16" Margin="15,50,0,0" VerticalAlignment="Top" Width="107" BorderBrush="Black" Cursor="Hand"/>
+                        <RadioButton x:Name="OptionF" Content="3.0 mm" HorizontalAlignment="Left" Height="16" Margin="110,50,0,0" VerticalAlignment="Top" Width="107" BorderBrush="Black" Cursor="Hand"/>
+                        <RadioButton x:Name="OptionE" Content="2.0 mm" HorizontalAlignment="Left" Height="16" Margin="110,0,0,0" VerticalAlignment="Center" Width="106" BorderBrush="Black" Cursor="Hand"/>
+                        <RadioButton x:Name="OptionD" Content="1.5 mm" HorizontalAlignment="Left" Height="16" Margin="110,5,0,0" VerticalAlignment="Top" Width="107" BorderBrush="Black" Cursor="Hand"/>
                     </Grid>
                 </GroupBox>
                 <GroupBox HorizontalAlignment="Left" Height="96" Header="Mehrere Formen" Margin="35,348,0,0" VerticalAlignment="Top" Width="331" BorderBrush="Black" FontFamily="Bahnschrift SemiBold" FontSize="16">
@@ -143,6 +143,9 @@
                         <TextBox x:Name="_firmaName" HorizontalAlignment="Center" Height="26" TextWrapping="Wrap" Text="" VerticalAlignment="Center" Width="87" BorderBrush="#FFC1C1C1" Foreground="#FFB5B5B5"/>
                     </Grid>
                 </GroupBox>
+                <Grid HorizontalAlignment="Left" Height="22" Margin="723,200,0,0" VerticalAlignment="Top" Width="45">
+                        <CheckBox x:Name="_farbe" Content="Blau" HorizontalAlignment="Center" Height="22" VerticalAlignment="Center" Width="44" IsChecked="False"/>
+                </Grid>
             </Grid>
         </Canvas>
     </Viewbox>
