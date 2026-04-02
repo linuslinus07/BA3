@@ -147,6 +147,7 @@
                 <Grid HorizontalAlignment="Left" Height="22" Margin="723,200,0,0" VerticalAlignment="Top" Width="45">
                     <CheckBox x:Name="_farbe" Content="Blau" HorizontalAlignment="Center" Height="22" VerticalAlignment="Center" Width="44" IsChecked="False"/>
                 </Grid>
+                <TextBlock x:Name="_version" HorizontalAlignment="Left" Margin="10,530,0,0" TextWrapping="Wrap" Text="{Binding version}" VerticalAlignment="Top" Foreground="#FFADADAD" FontSize="10"/>
             </Grid>
         </Canvas>
     </Viewbox>

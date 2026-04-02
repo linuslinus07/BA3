@@ -25,10 +25,21 @@ using System.Windows.Automation.Peers;
 
 namespace WpfApp2
 {
-    // stand 16.06.25
+    // stand 01.04.25; änderung: 2 formen oder mehr sollten funktionieren..
+    // alles <= 8 netto ist oke. also bis 475mm
+    // höher als netto 8 nicht möglich
+    
+    
+    // gerade netto bei lab 5: 55,115,175,235
+    // netto = ((nettoBohr / lab) + 1) / RPD;
+    // rpd = 60 / lab;
+    // ((nettoBohr / lab) + 1) / (60 / lab);
+
     public partial class MainWindow : Window
     {
         private string _folderpath;
+
+        public string version { get; set; } = "v010426";
 
         public MainWindow()
         {
@@ -38,6 +49,8 @@ namespace WpfApp2
             timer.Interval = TimeSpan.FromSeconds(1);
             timer.Tick += (s, e) => _time.Text = DateTime.Now.ToString("HH:mm:ss");
             timer.Start();
+
+            this.DataContext = this;
 
             #region -- Write Settings --
             _pathInput.Text = Properties.Settings.Default.pathInput.ToString();
@@ -250,11 +263,11 @@ namespace WpfApp2
                 string kunde = "_" + firma;
 
                 string directory = _pathInput.Text;
-                string fileName = fileName = $"d={diaInt}mm_h={height}mm_t={mat}{kunde}.nc";
+                string fileName = fileName = $"{anz}x_d={diaInt}mm_h={height}mm_t={mat}{kunde}.nc";
 
                 if (_firmaName.Text == "")
                 {
-                    fileName = $"d={diaInt}mm_h={height}mm_t={mat}.nc";
+                    fileName = $"{anz}x_d={diaInt}mm_h={height}mm_t={mat}.nc";
                 }
 
                 string filePath = System.IO.Path.Combine(directory, fileName);
@@ -354,7 +367,7 @@ namespace WpfApp2
 
                 double RPD = 60 / lab;
                 double Netto = ((nettoBohr / lab) + 1) / RPD;
-                double LastL = (Netto - Math.Floor(Netto)) * RPD;
+                double LastL = Math.Round((Netto - Math.Floor(Netto)) * RPD);
                 double LetzteL = ((Netto * 15) * lab);
 
                 double anzOff = height + xAbst;
@@ -431,6 +444,10 @@ namespace WpfApp2
                         writer.WriteLine("(Verschiebung xNull: " + xVersch + ")");
                         writer.WriteLine("(Anzahl Formen: " + anz + " " + "Abstand: " + xAbst + ")");
                         writer.WriteLine("(T1 D=1. CR=0. TAPER=140DEG-Bohrer)");
+                        writer.WriteLine("(Letzte Reihe bei: " + Math.Floor(LastL) + ")");
+                        writer.WriteLine("(Netto " + Netto + "/" + Math.Floor(Netto) + ")");
+                        writer.WriteLine("(Nettobohr " + nettoBohr + ")");
+                        writer.WriteLine("(rpd " + RPD + ")");
                         writer.WriteLine("G90 G94 G91.1 G40 G49 G17");
                         writer.WriteLine("G21");
                         writer.WriteLine("G28 G91 Z0.");
@@ -456,62 +473,234 @@ namespace WpfApp2
 
                         writer.WriteLine("G0 A0");
                         writer.WriteLine("G0 X23");
-                        
-                        if (Netto <= 4)
-                        {
-                            if (Netto == Math.Floor(Netto))
-                            {
-                                if (Netto == 1)                             //richtige spindeln auswählen
-                                {
-                                    writer.WriteLine("m102");
-                                    writer.WriteLine("m103");
-                                    writer.WriteLine("m104");
-                                    Spind2 = false;
-                                    Spind3 = false;
-                                    Spind4 = false;
-                                }
-                                else if (Netto == 2)
-                                {
-                                    writer.WriteLine("m103");
-                                    writer.WriteLine("m104");
-                                    Spind3 = false;
-                                    Spind4 = false;
-                                }
-                                else if (Netto == 3)
-                                {
-                                    writer.WriteLine("m104");
-                                    Spind4 = false;
-                                }
-                            }
-                            if (Math.Floor(Netto) == 0)                 // VB: Int(Netto)
-                            {
-                                writer.WriteLine("m102");
-                                writer.WriteLine("m103");
-                                writer.WriteLine("m104");
-                                Spind2 = false;
-                                Spind3 = false;
-                                Spind4 = false;
-                            }
-                            else if (Math.Floor(Netto) == 1)            // VB: Int(Netto)
-                            {
-                                writer.WriteLine("m103");
-                                writer.WriteLine("m104");
-                                Spind3 = false;
-                                Spind4 = false;
-                            }
-                            else if (Math.Floor(Netto) == 2)            // VB: Int(Netto)
-                            {
-                                writer.WriteLine("m104");
-                                Spind4 = false;
-                            }
-                        }
-
-                        writer.WriteLine("G43 Z" + (radExt + secur) + " H1");
-                        writer.WriteLine("G98 G81 X" + xErste + " Z" + (radInt - durch) + " R" + (radExt + secur) + " F9500");
 
                         for (int j = 1; j <= anz; j++) //loop for multiple forms
                         {
                             double offset = (j - 1) * anzOff;
+
+                            /*if (j > 1)                                              //wenn mehr als eine form, dann alle spindeln hoch und wieder runter (one by one) damit die nächste form gebohrt werden kann
+                            {
+                                if (!Spind1) { writer.WriteLine("m101"); Spind1 = true; }
+                                if (!Spind2) { writer.WriteLine("m102"); Spind2 = true; }
+                                if (!Spind3) { writer.WriteLine("m103"); Spind3 = true; }
+                                if (!Spind4) { writer.WriteLine("m104"); Spind4 = true; }
+                            }*/
+                            
+                            if (Netto <= 4)
+                            {
+                                if (Netto == Math.Floor(Netto))                 //wenn netto eine gerade zahl ist
+                                {
+                                    if (Netto == 1)                             //richtige spindeln auswählen
+                                    {
+                                        if (!Spind1)
+                                        {
+                                            writer.WriteLine("m101");
+                                            Spind1 = true;
+                                        }
+
+                                        if (Spind2)
+                                        {
+                                            writer.WriteLine("m102");
+                                            Spind2 = false;
+                                        }
+
+                                        if (Spind3)
+                                        {
+                                            writer.WriteLine("m103");
+                                            Spind3 = false;
+                                        }
+
+                                        if (Spind4)
+                                        {
+                                            writer.WriteLine("m104");
+                                            Spind4 = false;
+                                        }
+                                    }
+                                    else if (Netto == 2)
+                                    {
+                                        if (!Spind1)
+                                        {
+                                            writer.WriteLine("m101");
+                                            Spind1 = true;
+                                        }
+
+                                        if (!Spind2)
+                                        {
+                                            writer.WriteLine("m102");
+                                            Spind2 = true;
+                                        }
+
+                                        if (Spind3)
+                                        {
+                                            writer.WriteLine("m103");
+                                            Spind3 = false;
+                                        }
+
+                                        if (Spind4)
+                                        {
+                                            writer.WriteLine("m104");
+                                            Spind4 = false;
+                                        }
+                                    }
+                                    else if (Netto == 3)
+                                    {
+                                        if (!Spind1)
+                                        {
+                                            writer.WriteLine("m101");
+                                            Spind1 = true;
+                                        }
+
+                                        if (!Spind2)
+                                        {
+                                            writer.WriteLine("m102");
+                                            Spind2 = true;
+                                        }
+
+                                        if (!Spind3)
+                                        {
+                                            writer.WriteLine("m103");
+                                            Spind3 = true;
+                                        }
+
+                                        if (Spind4)
+                                        {
+                                            writer.WriteLine("m104");
+                                            Spind4 = false;
+                                        }
+                                    }
+                                }
+                                if (Math.Floor(Netto) == 0 && Netto != 0)                 //wenn netto ungerade ist, dann die richtigen spindeln auswählen
+                                {
+                                    if (!Spind1)
+                                    {
+                                        writer.WriteLine("m101");
+                                        Spind1 = true;
+                                    }
+
+                                    if (Spind2)
+                                    {
+                                        writer.WriteLine("m102");
+                                        Spind2 = false;
+                                    }
+
+                                    if (Spind3)
+                                    {
+                                        writer.WriteLine("m103");
+                                        Spind3 = false;
+                                    }
+
+                                    if (Spind4)
+                                    {
+                                        writer.WriteLine("m104");
+                                        Spind4 = false;
+                                    }
+                                }
+                                else if (Math.Floor(Netto) == 1 && Netto != 1)
+                                {
+                                    if (!Spind1)
+                                    {
+                                        writer.WriteLine("m101");
+                                        Spind1 = true;
+                                    }
+
+                                    if (!Spind2)
+                                    {
+                                        writer.WriteLine("m102");
+                                        Spind2 = true;
+                                    }
+
+                                    if (Spind3)
+                                    {
+                                        writer.WriteLine("m103");
+                                        Spind3 = false;
+                                    }
+
+                                    if (Spind4)
+                                    {
+                                        writer.WriteLine("m104");
+                                        Spind4 = false;
+                                    }
+                                }
+                                else if (Math.Floor(Netto) == 2 && Netto != 2)
+                                {
+                                    if (!Spind1)
+                                    {
+                                        writer.WriteLine("m101");
+                                        Spind1 = true;
+                                    }
+
+                                    if (!Spind2)
+                                    {
+                                        writer.WriteLine("m102");
+                                        Spind2 = true;
+                                    }
+
+                                    if (!Spind3)
+                                    {
+                                        writer.WriteLine("m103");
+                                        Spind3 = true;
+                                    }
+
+                                    if (Spind4)
+                                    {
+                                        writer.WriteLine("m104");
+                                        Spind4 = false;
+                                    }
+                                }
+                                else if (Math.Floor(Netto) == 3 && Netto != 3)
+                                {
+                                    if (!Spind1)
+                                    {
+                                        writer.WriteLine("m101");
+                                        Spind1 = true;
+                                    }
+
+                                    if (!Spind2)
+                                    {
+                                        writer.WriteLine("m102");
+                                        Spind2 = true;
+                                    }
+
+                                    if (!Spind3)
+                                    {
+                                        writer.WriteLine("m103");
+                                        Spind3 = true;
+                                    }
+
+                                    if (!Spind4)
+                                    {
+                                        writer.WriteLine("m104");
+                                        Spind4 = true;
+                                    }
+                                }
+                            }
+
+                            if (Netto > 4 && Netto <= 8)
+                            {
+                                if (!Spind1)
+                                {
+                                    writer.WriteLine("m101");
+                                    Spind1 = true;
+                                }
+                                if (!Spind2)
+                                {
+                                    writer.WriteLine("m102");
+                                    Spind2 = true;
+                                }
+                                if (!Spind3)
+                                {
+                                    writer.WriteLine("m103");
+                                    Spind3 = true;
+                                }
+                                if (!Spind4)
+                                {
+                                    writer.WriteLine("m104");
+                                    Spind4 = true;
+                                }
+                            }
+
+                            writer.WriteLine("G43 Z" + (radExt + secur) + " H1");
+                            writer.WriteLine("G98 G81 X" + xErste + " Z" + (radInt - durch) + " R" + (radExt + secur) + " F9500");
 
                             writer.WriteLine("(----------------------------Form " + j + "-----------------------)");
                             writer.WriteLine("(offset " + offset + ")");
@@ -676,50 +865,54 @@ namespace WpfApp2
                                         writer.WriteLine("m104");
                                         Spind4 = false;
                                     }
-                                    writer.WriteLine("(Rest nach spindelrückzug)");
-                                    xPos = Currentx;
-                                    // VB: For h = Int(LastL) To RPD - 1
-                                    // C#: Loop runs from floor(LastL) up to and including RPD - 1
-                                    for (h = (int)Math.Floor(LastL); h <= RPD - 1; h++) //den rest weiter bohren mit einer spindel weniger
+
+                                    if (Netto >= 1)
                                     {
-                                        xPos = xPos + lab;
-                                        aPos = aNull;
-                                        writer.WriteLine("(Reihe: " + (h + 1) + ")"); // Note: Original VB comment implies h starts from Int(LastL) and goes up to RPD-1. The row number is h+1.
-                                        writer.WriteLine("X" + (xPos + offset) + " A" + deg);
-                                        for (i = 1; i <= nbrHolesRad; i++)      // VB: For i = 1 To nbrHolesRad
+                                        writer.WriteLine("(Rest nach spindelrückzug)");
+                                        xPos = Currentx;
+                                        // VB: For h = Int(LastL) To RPD - 1
+                                        // C#: Loop runs from floor(LastL) up to and including RPD - 1
+                                        for (h = (int)Math.Floor(LastL); h <= RPD - 1; h++) //den rest weiter bohren mit einer spindel weniger
                                         {
-                                            if (i == 1)
-                                            {
-                                                aPos = deg;
-                                            }
-                                            if (i > 1)
-                                            {
-                                                aPos = aPos + deg;
-                                                writer.WriteLine("A" + aPos + "");
-                                            }
-                                        }
-                                        if (offsetbtn == true)
-                                        {
-                                            writer.WriteLine("(Versetzt)");
-                                            //xPos = xErste + (h - 1) * (lab / 2);
+                                            xPos = xPos + lab;
                                             aPos = aNull;
-                                            writer.WriteLine("(Versetzte Reihe: " + h + ")");
-                                            writer.WriteLine("X" + (xPos + (lab / 2) + offset) + " A" + (deg / 2)); ;
+                                            writer.WriteLine("(Reihe: " + (h + 1) + ")"); // Note: Original VB comment implies h starts from Int(LastL) and goes up to RPD-1. The row number is h+1.
+                                            writer.WriteLine("X" + (xPos + offset) + " A" + deg);
                                             for (i = 1; i <= nbrHolesRad; i++)      // VB: For i = 1 To nbrHolesRad
                                             {
                                                 if (i == 1)
                                                 {
                                                     aPos = deg;
                                                 }
-                                                if (i == 2)
-                                                {
-                                                    aPos = aPos + (deg / 2);
-                                                    writer.WriteLine("A" + aPos);
-                                                }
-                                                else if (i > 2)
+                                                if (i > 1)
                                                 {
                                                     aPos = aPos + deg;
-                                                    writer.WriteLine("A" + aPos);
+                                                    writer.WriteLine("A" + aPos + "");
+                                                }
+                                            }
+                                            if (offsetbtn == true)
+                                            {
+                                                writer.WriteLine("(Versetzt)");
+                                                //xPos = xErste + (h - 1) * (lab / 2);
+                                                aPos = aNull;
+                                                writer.WriteLine("(Versetzte Reihe: " + h + ")");
+                                                writer.WriteLine("X" + (xPos + (lab / 2) + offset) + " A" + (deg / 2)); ;
+                                                for (i = 1; i <= nbrHolesRad; i++)      // VB: For i = 1 To nbrHolesRad
+                                                {
+                                                    if (i == 1)
+                                                    {
+                                                        aPos = deg;
+                                                    }
+                                                    if (i == 2)
+                                                    {
+                                                        aPos = aPos + (deg / 2);
+                                                        writer.WriteLine("A" + aPos);
+                                                    }
+                                                    else if (i > 2)
+                                                    {
+                                                        aPos = aPos + deg;
+                                                        writer.WriteLine("A" + aPos);
+                                                    }
                                                 }
                                             }
                                         }
@@ -917,6 +1110,8 @@ namespace WpfApp2
                                     // C#: Loop runs from 1 up to and including floor(LastL) + 1
                                     for (h = 1; h <= (int)Math.Floor(LastL); h++) //bis zur letzten bohren mit allen möglichen
                                     {
+                                        writer.WriteLine("(" + h + ")");
+                                        writer.WriteLine("(" + (int)Math.Floor(LastL) + ")");
                                         xPos = 240 + xErste + (h - 1) * lab; // Note the added 240 offset here
                                         aPos = aNull;
                                         writer.WriteLine("(Reihe: " + h + ")");
@@ -981,71 +1176,82 @@ namespace WpfApp2
                                         if (Spind3 == true)
                                         {
                                             writer.WriteLine("m103");
-                                            Spind3 = false; // Corrected typo from original VB comment analysis (assuming it meant Spind4 = False)
+                                            Spind3 = false;
                                         }
                                     }
-                                    writer.WriteLine("(Rest nach spindelrückzug)");
-                                    xPos = Currentx;
-                                    // VB: For h = Int(LastL) To RPD - 2
-                                    // C#: Loop runs from floor(LastL) up to and including RPD - 2
-                                    for (h = (int)Math.Floor(LastL); h <= RPD - 1; h++) //den rest auffüllen
+                                    else if (Math.Floor(Netto) == 7) // VB: Int(Netto)
                                     {
-                                        xPos = xPos + lab;
-                                        aPos = aNull;
-                                        writer.WriteLine("(Reihe: " + (h + 1) + ")"); // Note: Row number is h+1
-                                        writer.WriteLine("X" + (xPos + offset) + " A" + deg);
-                                        for (i = 1; i <= nbrHolesRad; i++)      // VB: For i = 1 To nbrHolesRad
+                                        if (Spind4 == true)
                                         {
-                                            if (i == 1)
-                                            {
-                                                aPos = deg;
-                                            }
-                                            if (i > 1)
-                                            {
-                                                aPos = aPos + deg;
-                                                writer.WriteLine("A" + aPos + "");
-                                            }
+                                            writer.WriteLine("m104");
+                                            Spind4 = false;
                                         }
-                                        if (offsetbtn == true)
+                                    }
+                                    // spindelrückzug
+                                    if (Netto >= 5)
+                                    {
+                                        writer.WriteLine("(Rest nach spindelrückzug)");
+                                        xPos = Currentx;
+                                        // VB: For h = Int(LastL) To RPD - 2
+                                        // C#: Loop runs from floor(LastL) up to and including RPD - 2
+                                        for (h = (int)Math.Floor(LastL); h <= RPD - 1; h++) //den rest auffüllen
                                         {
-                                            writer.WriteLine("(Versetzt)");
-                                            //xPos = xErste + (h - 1) * (lab / 2);
+                                            xPos = xPos + lab;
                                             aPos = aNull;
-                                            writer.WriteLine("(Versetzte Reihe: " + h + ")");
-                                            writer.WriteLine("X" + (xPos + (lab / 2) + offset) + " A" + (deg / 2)); ;
+                                            writer.WriteLine("(Reihe: " + (h + 1) + ")"); // Note: Row number is h+1
+                                            writer.WriteLine("X" + (xPos + offset) + " A" + deg);
                                             for (i = 1; i <= nbrHolesRad; i++)      // VB: For i = 1 To nbrHolesRad
                                             {
                                                 if (i == 1)
                                                 {
                                                     aPos = deg;
                                                 }
-                                                if (i == 2)
-                                                {
-                                                    aPos = aPos + (deg / 2);
-                                                    writer.WriteLine("A" + aPos);
-                                                }
-                                                else if (i > 2)
+                                                if (i > 1)
                                                 {
                                                     aPos = aPos + deg;
-                                                    writer.WriteLine("A" + aPos);
+                                                    writer.WriteLine("A" + aPos + "");
+                                                }
+                                            }
+                                            if (offsetbtn == true)
+                                            {
+                                                writer.WriteLine("(Versetzt)");
+                                                //xPos = xErste + (h - 1) * (lab / 2);
+                                                aPos = aNull;
+                                                writer.WriteLine("(Versetzte Reihe: " + h + ")");
+                                                writer.WriteLine("X" + (xPos + (lab / 2) + offset) + " A" + (deg / 2)); ;
+                                                for (i = 1; i <= nbrHolesRad; i++)      // VB: For i = 1 To nbrHolesRad
+                                                {
+                                                    if (i == 1)
+                                                    {
+                                                        aPos = deg;
+                                                    }
+                                                    if (i == 2)
+                                                    {
+                                                        aPos = aPos + (deg / 2);
+                                                        writer.WriteLine("A" + aPos);
+                                                    }
+                                                    else if (i > 2)
+                                                    {
+                                                        aPos = aPos + deg;
+                                                        writer.WriteLine("A" + aPos);
+                                                    }
                                                 }
                                             }
                                         }
                                     }
                                 }
                             }
+                            writer.WriteLine("G80");
                         }
 
-                        
-                        writer.WriteLine("G80");
                         writer.WriteLine("m110"); //alle spindeln hoch
-                        writer.WriteLine("G28 G91 Z0.");    //
-                        writer.WriteLine("G90");
-                        writer.WriteLine("A0.");
-                        writer.WriteLine("G28 G91 X0.");
+                        writer.WriteLine("G28 G91 Z0.");    //hiemfahrt z achse
+                        writer.WriteLine("G90");            //absolute positionierung
+                        writer.WriteLine("A0.");            //absolute winkelpositionierung
+                        writer.WriteLine("G28 G91 X0.");    //hiemfahrt x achse
                         //writer.WriteLine("G90");
-                        writer.WriteLine("M5");
-                        writer.WriteLine("M30");
+                        writer.WriteLine("M5");             //spindel stopp
+                        writer.WriteLine("M30");            //programmende
 
                         writer.Close();
                     }

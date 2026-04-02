@@ -1,0 +1,64 @@
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2_MarkupCompile.cache
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2_MarkupCompile.lref
+C:\Users\linus\Downloads\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.exe
+C:\Users\linus\Downloads\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.dll.config
+C:\Users\linus\Downloads\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.deps.json
+C:\Users\linus\Downloads\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.runtimeconfig.json
+C:\Users\linus\Downloads\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.dll
+C:\Users\linus\Downloads\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.pdb
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.g.resources
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.AssemblyInfoInputs.cache
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.AssemblyInfo.cs
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.csproj.CoreCompileInputs.cache
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.dll
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\refint\WpfApp2.dll
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.pdb
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.genruntimeconfig.cache
+C:\Users\linus\Downloads\BA3-main\BA3-main\obj\Debug\net8.0-windows\ref\WpfApp2.dll
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.exe
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.dll.config
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.deps.json
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.runtimeconfig.json
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.dll
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\bin\Debug\net8.0-windows\WpfApp2.pdb
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2_MarkupCompile.cache
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2_MarkupCompile.lref
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.g.resources
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.AssemblyInfoInputs.cache
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.AssemblyInfo.cs
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.csproj.CoreCompileInputs.cache
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.dll
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\refint\WpfApp2.dll
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.pdb
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\WpfApp2.genruntimeconfig.cache
+C:\Users\linus\Proton Drive\linloo1353\My files\Clean Install Win 11\BA3-main\BA3-main\obj\Debug\net8.0-windows\ref\WpfApp2.dll
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\MainWindow.g.cs
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\App.g.cs
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2_MarkupCompile.cache
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2_MarkupCompile.lref
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.dll
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\refint\WpfApp2.dll
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.pdb
+C:\Users\linus\source\repos\BA3\bin\Debug\net8.0-windows\WpfApp2.exe
+C:\Users\linus\source\repos\BA3\bin\Debug\net8.0-windows\WpfApp2.dll.config
+C:\Users\linus\source\repos\BA3\bin\Debug\net8.0-windows\WpfApp2.deps.json
+C:\Users\linus\source\repos\BA3\bin\Debug\net8.0-windows\WpfApp2.runtimeconfig.json
+C:\Users\linus\source\repos\BA3\bin\Debug\net8.0-windows\WpfApp2.dll
+C:\Users\linus\source\repos\BA3\bin\Debug\net8.0-windows\WpfApp2.pdb
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\MainWindow.baml
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.g.resources
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.AssemblyInfoInputs.cache
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.AssemblyInfo.cs
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.csproj.CoreCompileInputs.cache
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.sourcelink.json
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\WpfApp2.genruntimeconfig.cache
+C:\Users\linus\source\repos\BA3\obj\Debug\net8.0-windows\ref\WpfApp2.dll
